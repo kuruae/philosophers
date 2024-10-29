@@ -6,25 +6,11 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:55:23 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/29 18:25:15 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/10/29 20:58:19 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-t_error	init_data(t_data *data, char **argv, int argc)
-{
-	data = (t_data *)malloc(sizeof(t_data));
-	if (!data)
-		return (ERR_MALLOC);
-	data->nb_philo = atoi(argv[1]);
-	data->time_to_die = atoi(argv[2]);
-	data->time_to_eat = atoi(argv[3]);
-	data->time_to_sleep = atoi(argv[4]);
-	if (argc == 6)
-		data->maximum_meal = atoi(argv[5]);
-	return (SUCCESS);
-}
 
 static int	ft_isspace(int c)
 {
@@ -58,3 +44,16 @@ static int	ft_atoi(const char *nptr)
 	return (result * sign);
 }
 
+t_error	init_data(t_data *data, char **argv, int argc)
+{
+	data = (t_data *)malloc(sizeof(t_data));
+	if (!data)
+		return (ERR_MALLOC);
+	data->nb_philo = ft_atoi(argv[1]);
+	data->time_to_die = ft_atoi(argv[2]);
+	data->time_to_eat = ft_atoi(argv[3]);
+	data->time_to_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		data->maximum_meal = ft_atoi(argv[5]);
+	return (SUCCESS);
+}
