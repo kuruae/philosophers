@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:55:23 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/29 20:58:19 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:00:47 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,6 @@ static int	ft_atoi(const char *nptr)
 
 t_error	init_data(t_data *data, char **argv, int argc)
 {
-	data = (t_data *)malloc(sizeof(t_data));
-	if (!data)
-		return (ERR_MALLOC);
 	data->nb_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
