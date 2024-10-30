@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 20:40:10 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/29 21:09:31 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/10/30 23:07:44 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_data
 	t_mutex			log_mutex;
 	t_mutex			end_mutex;
 	t_mutex			forks[200];
+	struct s_philo	philo[200];
 }	t_data;
 
 typedef struct s_philo

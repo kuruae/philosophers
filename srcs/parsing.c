@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:28:41 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/29 18:15:52 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/10/30 22:50:21 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,18 @@ static bool	ft_str_isdigit(char *str)
 	return (true);
 }
 
-int	parsing(char **arg)
+t_error	parsing(int argc, char **argv)
 {
 	int	i;
 
+	if (argc < 5 || argc > 6)
+		return (FAILURE);
 	i = 1;
-	while (arg[i])
+	while (argv[i])
 	{
-		if (ft_str_isdigit(arg[i]) == false)
-			return (-1);
+		if (ft_str_isdigit(argv[i]) == false)
+			return (FAILURE);
 		i++;
 	}
-	return (0);
+	return (SUCCESS);
 }
