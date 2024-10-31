@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:28:37 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/31 01:40:37 by enzo             ###   ########.fr       */
+/*   Updated: 2024/10/31 02:02:55 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@ void	exit_err(void)
 
 void	*routine(void *arg)
 {
-	t_philo *philo;
-	// t_data	*data;
+	t_philo	*philo;
 
-	philo = (t_philo*)arg;
-	// data = philo->data;
+	philo = (t_philo *)arg;
 	if (philo->id % 2 == 1)
 		sleep(5);
 	eat(philo->data, philo);
@@ -33,14 +31,14 @@ void	*routine(void *arg)
 
 int	eat(t_data *data, t_philo *philo)
 {
-	struct timeval tv;
-	long 	time;
+	struct timeval	tv;
+	long			time;
 
 	pthread_mutex_lock(philo->left_fork);
 	pthread_mutex_lock(philo->right_fork);
-	gettimeofday(&tv ,NULL);
+	gettimeofday(&tv, NULL);
 	time = get_time() - data->start_time;
-	printf("%ld :%d is eating\n",time , philo->id);
+	printf("%ld :%d is eating\n", time, philo->id);
 	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
 	return (EXIT_SUCCESS);
