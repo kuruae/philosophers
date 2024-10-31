@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:35:09 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/31 01:52:31 by enzo             ###   ########.fr       */
+/*   Updated: 2024/10/31 17:56:05 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,14 @@ typedef struct s_philo	t_philo;
 t_error		parsing(int agrc, char **argv);
 t_error		init_all(t_data *data, t_philo *philo, char **argv, int argc);
 t_error		create_threads(t_data *data, t_philo *philo);
+t_error		eating(t_data *data, t_philo *philo);
+t_error		sleeping(t_data *data, t_philo *philo);
+t_error		thinking(t_data *data, t_philo *philo);
+t_error		monitoring(t_data *data, t_philo *philo);
+t_error		sleep_action(long long desired_time, t_data *data, t_philo *philo);
+
 void		*routine(void *arg);
 void		exit_err(void);
-int			eat(t_data *data, t_philo *philo);
 
 // UTILS
 

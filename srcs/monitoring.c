@@ -1,21 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 15:26:37 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/31 17:29:02 by emagnani         ###   ########.fr       */
+/*   Created: 2024/10/31 16:55:16 by emagnani          #+#    #+#             */
+/*   Updated: 2024/10/31 18:06:20 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-long long	get_time(void)
+t_error	monitoring(t_data *data, t_philo *philo)
 {
-	struct timeval	tv;
+	int		i;
+	long	time;
 
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec) * (long long)1000 + (tv.tv_usec) / 1000);
+	i = 0;
+	time = get_time() - data->start_time;
+	while (1)
+	{
+		while (i < data->nb_philo)
+		{
+			if (philo[i].meal_remaining == 0)
+				philo[i].state = SATISFIED;
+			if ()
+			{
+				philo[i].state = DIED;
+				printf("&ld :%d has died\n", time, philo[i].id);
+			}
+			i++;
+		}
+		i = 0;
+	}
+	return (SUCCESS);
 }

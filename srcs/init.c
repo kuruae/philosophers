@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:55:23 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/31 02:03:18 by enzo             ###   ########.fr       */
+/*   Updated: 2024/10/31 16:28:36 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_error	init_philo(t_philo *philo, t_data *data)
 		philo[i].id = i + 1;
 		philo[i].dead = 0;
 		philo[i].data = data;
-		// philo[i].meal_remaining = data->maximum_meal;
+		philo[i].meal_remaining = data->maximum_meal;
 		philo[i].last_eaten = 0;
 		philo[i].right_fork = &data->forks[i];
 		philo[i].left_fork = &data->forks[i - 1];

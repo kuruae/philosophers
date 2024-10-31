@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 20:40:10 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/31 01:38:17 by enzo             ###   ########.fr       */
+/*   Updated: 2024/10/31 16:32:15 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_philo
 	t_mutex			*right_fork;
 	t_mutex			*left_fork;
 	t_mutex			meal_mutex;
+	t_action		state;
 	pthread_t		thread_id;
 	struct s_data	*data;
 }	t_philo;
