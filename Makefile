@@ -21,6 +21,7 @@ INCLUDE_DIRS = -I$(INCLUDE_DIR)
 SRC_FILES = $(SRC_DIR)/main.c \
 			$(SRC_DIR)/parsing.c \
 			$(SRC_DIR)/init.c \
+			$(SRC_DIR)/utils.c \
 
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 OBJ_FILES_ASAN = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/asan/%.o,$(SRC_FILES))

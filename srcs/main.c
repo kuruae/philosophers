@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:28:37 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/30 23:22:54 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/10/31 01:40:37 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@ void	exit_err(void)
 	exit(EXIT_FAILURE);
 }
 
-static void	free_data_exit(t_data *data)
-{
-	(void)data;
-	return ;
-}
-
 void	*routine(void *arg)
 {
 	t_philo *philo;
@@ -33,8 +27,23 @@ void	*routine(void *arg)
 	// data = philo->data;
 	if (philo->id % 2 == 1)
 		sleep(5);
-	// eat(philo->data, philo);
+	eat(philo->data, philo);
 	return (NULL);
+}
+
+int	eat(t_data *data, t_philo *philo)
+{
+	struct timeval tv;
+	long 	time;
+
+	pthread_mutex_lock(philo->left_fork);
+	pthread_mutex_lock(philo->right_fork);
+	gettimeofday(&tv ,NULL);
+	time = get_time() - data->start_time;
+	printf("%ld :%d is eating\n",time , philo->id);
+	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_unlock(philo->right_fork);
+	return (EXIT_SUCCESS);
 }
 
 t_error	create_threads(t_data *data, t_philo *philo)
@@ -64,9 +73,9 @@ int	main(int argc, char **argv)
 
 	if (parsing(argc, argv) == FAILURE)
 		exit_err();
-	if (init_data(&data, &data.philo, argv, argc) != SUCCESS)
+	if (init_all(&data, data.philo, argv, argc) != SUCCESS)
 		exit_err();
-	create_threads(&data, &data.philo);
+	create_threads(&data, data.philo);
 	// free_data_exit(&data);
 	return (0);
 }

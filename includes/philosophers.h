@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:35:09 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/30 23:21:40 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/10/31 01:52:31 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,16 @@ typedef struct s_philo	t_philo;
 
 // FUNCTIONS 
 
-void	exit_err(void);
-t_error	parsing(int agrc, char **argv);
-int		ft_isdigit(int c);
-t_error	init_philo(t_philo *philo, t_data *data);
-t_error	init_data(t_data *data, t_philo *philo, char **argv, int argc);
-t_error	create_threads(t_data *data, t_philo *philo);
+t_error		parsing(int agrc, char **argv);
+t_error		init_all(t_data *data, t_philo *philo, char **argv, int argc);
+t_error		create_threads(t_data *data, t_philo *philo);
+void		*routine(void *arg);
+void		exit_err(void);
+int			eat(t_data *data, t_philo *philo);
+
+// UTILS
+
 long long	get_time(void);
-void	*routine(void* arg);
+int			ft_isdigit(int c);
 
 #endif

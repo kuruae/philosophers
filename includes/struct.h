@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 20:40:10 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/30 23:07:44 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/10/31 01:38:17 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,6 @@ typedef enum e_error
 	FAILURE
 }	t_error;
 
-typedef struct s_data
-{
-	int				nb_philo;
-	int				time_to_eat;
-	int				time_to_die;
-	int				time_to_sleep;
-	int				maximum_meal;
-	long long		start_time;
-	int				should_end;
-	int				end_reason;
-	t_mutex			log_mutex;
-	t_mutex			end_mutex;
-	t_mutex			forks[200];
-	struct s_philo	philo[200];
-}	t_data;
-
 typedef struct s_philo
 {
 	int				id;
@@ -60,7 +44,23 @@ typedef struct s_philo
 	t_mutex			*left_fork;
 	t_mutex			meal_mutex;
 	pthread_t		thread_id;
-	t_data			*data;
+	struct s_data	*data;
 }	t_philo;
+
+typedef struct s_data
+{
+	int			nb_philo;
+	int			time_to_eat;
+	int			time_to_die;
+	int			time_to_sleep;
+	int			maximum_meal;
+	long long	start_time;
+	int			should_end;
+	int			end_reason;
+	t_mutex		log_mutex;
+	t_mutex		end_mutex;
+	t_mutex		forks[200];
+	t_philo		philo[200];
+}	t_data;
 
 #endif
