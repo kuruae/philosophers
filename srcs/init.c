@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:55:23 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/31 16:28:36 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/10/31 18:54:18 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,11 @@ static t_error	init_philo(t_philo *philo, t_data *data)
 		philo[i].data = data;
 		philo[i].meal_remaining = data->maximum_meal;
 		philo[i].last_eaten = 0;
+		philo[i].flag = &data->log_mutex;
 		philo[i].right_fork = &data->forks[i];
 		philo[i].left_fork = &data->forks[i - 1];
+		if (pthread_mutex_init(philo[i].flag, NULL) != 0)
+			return (ERR_MALLOC);
 		if (pthread_mutex_init(philo[i].right_fork, NULL) != 0)
 			return (ERR_MALLOC);
 		if (i != 0)
