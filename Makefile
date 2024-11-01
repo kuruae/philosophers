@@ -6,7 +6,7 @@ RESET = \x1B[0m
 ######### FLAGS ########
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -g3 -pthread
-SANITIZE_FLAGS = -fsanitize=thread
+SANITIZE_FLAGS = -fsanitize=thread -fno-omit-frame-pointer
 
 ######### DIRECTORIES ########
 SRC_DIR = srcs
