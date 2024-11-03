@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 16:55:16 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/03 01:12:34 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/03 01:19:07 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ t_error	monitoring(t_data *data, t_philo *philo)
 		while(i < data->nb_philo)
 		{
 			pthread_mutex_lock(philo[i].flag);
-			philo[i].state = DIED;
+			philo[i].state = SATISFIED;
 			pthread_mutex_unlock(philo[i].flag);
 			i++;
 		}
+		i = 0;
 	}
 	// int		i;
 	// long	time;
