@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 16:55:16 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/31 18:53:42 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/03 01:12:34 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 
 t_error	monitoring(t_data *data, t_philo *philo)
 {
-	(void)data;
-	(void)philo;
-	printf("test\n");
-	pthread_mutex_lock(philo[5].flag);
-	philo[5].state = DIED;
-	pthread_mutex_unlock(philo[5].flag);
+	int i = 0;
+	while (1)
+	{
+		while(i < data->nb_philo)
+		{
+			pthread_mutex_lock(philo[i].flag);
+			philo[i].state = DIED;
+			pthread_mutex_unlock(philo[i].flag);
+			i++;
+		}
+	}
 	// int		i;
 	// long	time;
 
