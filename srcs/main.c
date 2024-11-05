@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:28:37 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/05 22:37:31 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/05 22:59:36 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	main(int argc, char **argv)
 	if (init_all(&data, data.philo, argv, argc) != SUCCESS)
 		exit_err();
 	create_threads(&data, data.philo);
+	printf("All philosophers are satisfied\n");
 	// free_data_exit(&data);
 	return (0);
 }
