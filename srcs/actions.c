@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:04:45 by enzo              #+#    #+#             */
-/*   Updated: 2024/11/05 18:26:32 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/05 22:09:00 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,29 @@
 
 t_error	thinking(t_data *data, t_philo *philo)
 {
-	struct timeval	tv;
 	long			time;
 
-	// pthread_mutex_lock(philo->left_fork);
-	// pthread_mutex_lock(philo->right_fork);
-	philo->state = THINK;
-	gettimeofday(&tv, NULL);
+    pthread_mutex_lock(philo->flag);
+    if (philo->state == DIED)
+        return (ERR_DEATH);
+    pthread_mutex_unlock(philo->flag);
 	time = get_time() - data->start_time;
 	printf("%ld :%d is thinking\n", time, philo->id);
-	// pthread_mutex_unlock(philo->left_fork);
-	// pthread_mutex_unlock(philo->right_fork);
 	return (SUCCESS);
 }
 
 t_error	sleeping(t_data *data, t_philo *philo)
 {
-	struct timeval	tv;
 	long			time;
 
-	// pthread_mutex_lock(philo->left_fork);
-	// pthread_mutex_lock(philo->right_fork);
-	philo->state = SLEEP;
-	gettimeofday(&tv, NULL);
 	time = get_time() - data->start_time;
+    pthread_mutex_lock(philo->flag);
+    if (philo->state == DIED)
+        return (ERR_DEATH);
+    pthread_mutex_unlock(philo->flag);
 	printf("%ld :%d is sleeping\n", time, philo->id);
 	if (sleep_action(data->time_to_sleep, data, philo) != SUCCESS)
 		printf("%ld :%d bro died\n", time, philo->id);
-	// pthread_mutex_unlock(philo->left_fork);
-	// pthread_mutex_unlock(philo->right_fork);
 	return (SUCCESS);
 }
 

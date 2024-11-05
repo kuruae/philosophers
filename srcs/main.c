@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:28:37 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/05 18:23:04 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/05 22:37:31 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,28 @@ void	exit_err(void)
 	exit(EXIT_FAILURE);
 }
 
-void *routine(void *arg)
+void	*routine(void *arg)
 {
-	t_philo *philo;
-	t_data *data;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	data = philo->data;
-
 	if (philo->id % 2 == 1)
 		usleep(50);
-
 	while (1)
 	{
-		pthread_mutex_lock(&data->end_mutex);
-		if (data->should_end)
+		pthread_mutex_lock(&philo->data->end_mutex);
+		if (philo->data->should_end || philo->state == DIED)
 		{
-			pthread_mutex_unlock(&data->end_mutex);
+			pthread_mutex_unlock(&philo->data->end_mutex);
 			break;
 		}
-		pthread_mutex_unlock(&data->end_mutex);
+		pthread_mutex_unlock(&philo->data->end_mutex);
 
-		if (eating(data, philo) != SUCCESS)
+		if (eating(philo->data, philo) != SUCCESS)
 			break;
-		if (sleeping(data, philo) != SUCCESS)
+		if (sleeping(philo->data, philo) != SUCCESS)
 			break;
-		if (thinking(data, philo) != SUCCESS)
+		if (thinking(philo->data, philo) != SUCCESS)
 			break;
 	}
 	return (NULL);
