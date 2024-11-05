@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 16:55:16 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/03 01:19:07 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/05 18:06:32 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,60 @@
 
 t_error	monitoring(t_data *data, t_philo *philo)
 {
-	int i = 0;
+	int i;
+	long current_time;
+	int all_ate_enough;
+
 	while (1)
 	{
-		while(i < data->nb_philo)
+		i = 0;
+		all_ate_enough = 1;
+		
+		while (i < data->nb_philo)
 		{
-			pthread_mutex_lock(philo[i].flag);
-			philo[i].state = SATISFIED;
-			pthread_mutex_unlock(philo[i].flag);
+			// test
+			// pthread_mutex_lock(philo[i].flag);
+			// philo[i].state = DIED;
+			// pthread_mutex_unlock(philo[i].flag);
+			current_time = get_time() - data->start_time;
+			
+			pthread_mutex_lock(&philo[i].meal_mutex);
+			// Check if philosopher died
+			if ((current_time - philo[i].last_eaten) > data->time_to_die)
+			{
+				// Lock to change state and print death message
+				pthread_mutex_lock(philo[i].flag);
+				philo[i].state = DIED;
+				printf("%ld %d died\n", current_time, philo[i].id);
+				pthread_mutex_unlock(philo[i].flag);
+
+				// Set program end flag to stop all philosophers
+				pthread_mutex_lock(&data->end_mutex);
+				data->should_end = 1;
+				pthread_mutex_unlock(&data->end_mutex);
+				
+				pthread_mutex_unlock(&philo[i].meal_mutex);
+				return (ERR_DEATH);  // Return to main to end program
+			}
+			
+			if (data->maximum_meal > 0 && philo[i].meal_remaining > 0)
+				all_ate_enough = 0;
+			
+			pthread_mutex_unlock(&philo[i].meal_mutex);
 			i++;
 		}
-		i = 0;
+		
+		// Check if all philosophers have eaten enough
+		if (data->maximum_meal > 0 && all_ate_enough)
+		{
+			pthread_mutex_lock(&data->end_mutex);
+			data->should_end = 1;
+			data->all_satisfied = 1;
+			pthread_mutex_unlock(&data->end_mutex);
+			return (SUCCESS);
+		}
+		
+		usleep(1000);  // Small sleep to prevent CPU overuse
 	}
-	// int		i;
-	// long	time;
-
-	// i = 0;
-	// time = get_time() - data->start_time;
-	// while (1)
-	// {
-	// 	while (i < data->nb_philo)
-	// 	{
-	// 		if (philo[i].meal_remaining == 0)
-	// 			philo[i].state = SATISFIED;
-	// 		if ()
-	// 		{
-	// 			philo[i].state = DIED;
-	// 			printf("&ld :%d has died\n", time, philo[i].id);
-	// 		}
-	// 		i++;
-	// 	}
-	// 	i = 0;
-	// }
-	return (SUCCESS);
+	return (FAILURE);
 }

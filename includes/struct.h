@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 20:40:10 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/31 18:53:31 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:51:37 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef enum e_error
 {
 	SUCCESS,
 	ERR_MALLOC,
+	ERR_DEATH,
 	FAILURE
 }	t_error;
 
@@ -58,6 +59,7 @@ typedef struct s_data
 	int			maximum_meal;
 	long long	start_time;
 	int			should_end;
+	int			all_satisfied;
 	int			end_reason;
 	t_mutex		log_mutex;
 	t_mutex		end_mutex;

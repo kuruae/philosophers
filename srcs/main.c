@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:28:37 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/03 00:32:14 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/05 18:23:04 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,34 @@ void	exit_err(void)
 	exit(EXIT_FAILURE);
 }
 
-void	*routine(void *arg)
+void *routine(void *arg)
 {
-	t_philo	*philo;
+	t_philo *philo;
+	t_data *data;
 
 	philo = (t_philo *)arg;
+	data = philo->data;
+
 	if (philo->id % 2 == 1)
 		usleep(50);
-	eating(philo->data, philo);
-	sleeping(philo->data, philo);
-	thinking(philo->data, philo);
+
+	while (1)
+	{
+		pthread_mutex_lock(&data->end_mutex);
+		if (data->should_end)
+		{
+			pthread_mutex_unlock(&data->end_mutex);
+			break;
+		}
+		pthread_mutex_unlock(&data->end_mutex);
+
+		if (eating(data, philo) != SUCCESS)
+			break;
+		if (sleeping(data, philo) != SUCCESS)
+			break;
+		if (thinking(data, philo) != SUCCESS)
+			break;
+	}
 	return (NULL);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:55:23 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/03 01:00:58 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/05 15:35:10 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static t_error	init_philo(t_philo *philo, t_data *data)
 
 	i = 0;
 	// if (pthread_mutex_init(&data->log_mutex, NULL) != 0)
-    //     return (ERR_MALLOC);
+	//     return (ERR_MALLOC);
 	while (i < data->nb_philo)
 	{
 		philo[i].id = i + 1;
@@ -69,7 +69,7 @@ static t_error	init_philo(t_philo *philo, t_data *data)
 	}
 	philo[0].left_fork = philo[data->nb_philo - 1].right_fork;
 	if (pthread_mutex_init(&data->log_mutex, NULL) != 0)
-        return (ERR_MALLOC);
+		return (ERR_MALLOC);
 	return (SUCCESS);
 }
 
