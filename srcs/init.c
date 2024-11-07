@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:55:23 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/07 19:45:01 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/07 23:52:53 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,39 +44,48 @@ static int	ft_atoi(const char *nptr)
 	return (result * sign);
 }
 
-static t_error	init_mutexes(t_data *data)
+static t_error	init_mutexes_data(t_data *data)
 {
-    int i;
+	int	i;
 
-    // Initialize each fork's mutex
-    for (i = 0; i < data->nb_philo; i++) {
-        if (pthread_mutex_init(&data->forks[i], NULL) != 0)
-            return (ERR_MALLOC);
-    }
+	i = 0;
+	// Initialize each fork's mutex
+	while (i < data->nb_philo)
+	{
+		if (pthread_mutex_init(&(data->forks[i]), NULL) != 0)
+			return (0);
+		i++;
+	}
+	i = 0;
+	// Initialize the log mutex
+	if (pthread_mutex_init(&data->log_mutex, NULL) != 0)
+		return (ERR_MALLOC);
 
-    // Initialize the log mutex
-    if (pthread_mutex_init(&data->log_mutex, NULL) != 0)
-        return (ERR_MALLOC);
+	// Initialize the end mutex
+	if (pthread_mutex_init(&data->end_mutex, NULL) != 0)
+		return (ERR_MALLOC);
 
-    // Initialize the end mutex
-    if (pthread_mutex_init(&data->end_mutex, NULL) != 0)
-        return (ERR_MALLOC);
+	return (SUCCESS);
+}
 
-    // Initialize each philosopher's meal_mutex
-    for (i = 0; i < data->nb_philo; i++) {
-        if (pthread_mutex_init(&data->philo[i].meal_mutex, NULL) != 0)
-            return (ERR_MALLOC);
-    }
+static t_error	init_mutexes_philo(t_philo *philo)
+{
+	int	i;
 
-    return (SUCCESS);
+	i = 0;
+	while (i < 200)
+	{
+		if (pthread_mutex_init(&philo[i].meal_mutex, NULL) != 0)
+			return (0);
+		i++;
+	}
+	return (SUCCESS);
 }
 
 static t_error	init_philo(t_philo *philo, t_data *data)
 {
 	int	i;
 
-	if (init_mutexes(data) != SUCCESS)
-    	return (ERR_MALLOC);
 	i = 0;
 	// if (pthread_mutex_init(&data->log_mutex, NULL) != 0)
 	//     return (ERR_MALLOC);
@@ -87,17 +96,12 @@ static t_error	init_philo(t_philo *philo, t_data *data)
 		philo[i].data = data;
 		philo[i].meal_remaining = data->maximum_meal;
 		philo[i].last_eaten = 0;
-		philo[i].right_fork = &data->forks[i];
-		philo[i].left_fork = &data->forks[i - 1];
-		if (pthread_mutex_init(philo[i].right_fork, NULL) != 0)
-			return (ERR_MALLOC);
+philo[i].left_fork = &(data->forks[i]);
+		philo[i].right_fork = &(data->forks[(i + 1) % data->nb_philo]);
 		if (pthread_mutex_init(&philo[i].flag, NULL) != 0)
 			return (ERR_MALLOC);
-		if (i != 0)
-			philo[i].left_fork = philo[i - 1].right_fork;
 		i++;
 	}
-	philo[0].left_fork = philo[data->nb_philo - 1].right_fork;
 	if (pthread_mutex_init(&data->log_mutex, NULL) != 0)
 		return (ERR_MALLOC);
 	return (SUCCESS);
@@ -119,7 +123,11 @@ t_error	init_all(t_data *data, t_philo *philo, char **argv, int argc)
 {
 	if (init_data(data, argv, argc) != SUCCESS)
 		return (ERR_MALLOC);
+	if (init_mutexes_data(data) != SUCCESS)
+		return (ERR_MALLOC);
 	if (init_philo(philo, data) != SUCCESS)
+		return (ERR_MALLOC);
+	if (init_mutexes_philo(philo) != SUCCESS)
 		return (ERR_MALLOC);
 	return (SUCCESS);
 }
