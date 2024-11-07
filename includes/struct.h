@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 20:40:10 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/05 17:51:37 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/07 19:26:14 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_philo
 	t_mutex			*right_fork;
 	t_mutex			*left_fork;
 	t_mutex			meal_mutex;
-	t_mutex			*flag;
+	t_mutex			flag;
 	t_action		state;
 	pthread_t		thread_id;
 	struct s_data	*data;

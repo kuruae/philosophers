@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 16:55:16 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/05 22:59:14 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/07 19:26:30 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ t_error	monitoring(t_data *data, t_philo *philo)
 			if ((current_time - philo[i].last_eaten) > data->time_to_die)
 			{
 				// Lock to change state and print death message
-				pthread_mutex_lock(philo[i].flag);
+				pthread_mutex_lock(&philo[i].flag);
 				philo[i].state = DIED;
 				printf("%ld %d died\n", current_time, philo[i].id);
-				pthread_mutex_unlock(philo[i].flag);
+				pthread_mutex_unlock(&philo[i].flag);
 
 				// Set program end flag to stop all philosophers
 				pthread_mutex_lock(&data->end_mutex);
