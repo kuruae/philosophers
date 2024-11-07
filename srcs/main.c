@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:28:37 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/05 22:59:36 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/07 18:20:13 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ t_error	create_threads(t_data *data, t_philo *philo)
 			return (FAILURE);
 		i++;
 	}
-	monitoring(data, philo);
+	if (monitoring(data, philo) == ERR_DEATH)
+		return (SUCCESS);
 	i = 0;
 	while (i < data->nb_philo)
 	{
