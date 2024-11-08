@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:04:45 by enzo              #+#    #+#             */
-/*   Updated: 2024/11/07 19:44:42 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/08 00:15:26 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_error	sleeping(t_data *data, t_philo *philo)
 {
 	long			time;
 
-	time = get_time() - data->start_time;
     pthread_mutex_lock(&philo->flag);
     if (philo->state == DIED)
 	{
@@ -40,6 +39,7 @@ t_error	sleeping(t_data *data, t_philo *philo)
         return (ERR_DEATH);
 	}
     pthread_mutex_unlock(&philo->flag);
+	time = get_time() - data->start_time;
 	printf("%ld :%d is sleeping\n", time, philo->id);
 	if (sleep_action(data->time_to_sleep, data, philo) != SUCCESS)
 		printf("%ld :%d bro died\n", time, philo->id);
@@ -50,20 +50,19 @@ t_error	eating(t_data *data, t_philo *philo)
 {
 	long	time;
 
-	time = get_time() - data->start_time;
 	pthread_mutex_lock(&philo->flag);
 	if (philo->state == DIED)
 	{
-		printf("%ld :%d bro died\n", time, philo->id);
 		pthread_mutex_unlock(&philo->flag);
 		return (ERR_DEATH);
 	}
 	philo->state = EAT;
 	pthread_mutex_unlock(&philo->flag);
-
+	
 	pthread_mutex_lock(philo->left_fork);
 	pthread_mutex_lock(philo->right_fork);
 	
+	time = get_time() - data->start_time;
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->last_eaten = get_time() - data->start_time;
 	pthread_mutex_unlock(&philo->meal_mutex);

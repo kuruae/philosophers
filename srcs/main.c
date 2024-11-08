@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:28:37 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/07 18:43:30 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/08 00:18:52 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ t_error	create_threads(t_data *data, t_philo *philo)
 			return (FAILURE);
 		i++;
 	}
-	if (monitoring(data, philo) == ERR_DEATH)
-		return (SUCCESS);
+	monitoring(data, philo);
 	i = 0;
 	while (i < data->nb_philo)
 	{
