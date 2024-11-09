@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 16:55:16 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/09 14:46:31 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/09 16:10:33 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_error	monitoring(t_data *data, t_philo *philo)
 			return (SUCCESS);
 		}
 		
-		usleep(1000);  // Small sleep to prevent CPU overuse
+		usleep(50);  // Small sleep to prevent CPU overuse
 	}
 	return (FAILURE);
 }
