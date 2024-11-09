@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:28:37 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/09 14:49:20 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/09 17:11:53 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*routine(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 1)
-		usleep(50);
+		usleep(100);
 	while (1)
 	{
 		pthread_mutex_lock(&philo->data->end_mutex);
@@ -32,17 +32,17 @@ void	*routine(void *arg)
 		if (philo->data->should_end || philo->state == DIED)
 		{
 			pthread_mutex_unlock(&philo->data->end_mutex);
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(&philo->flag);
 		pthread_mutex_unlock(&philo->data->end_mutex);
 
 		if (eating(philo->data, philo) != SUCCESS)
-			break;
+			break ;
 		if (sleeping(philo->data, philo) != SUCCESS)
-			break;
+			break ;
 		if (thinking(philo->data, philo) != SUCCESS)
-			break;
+			break ;
 	}
 	return (NULL);
 }
