@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:28:41 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/30 22:50:21 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/09 22:59:05 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,22 @@ static bool	ft_str_isdigit(char *str)
 	return (true);
 }
 
+static void	check_values(char **argv)
+{
+	int	failure;
+
+	failure = 0;
+	if (ft_atoi(argv[1]) > 200)
+		exit_err(ERR_TOO_MANY_PHILOS);
+	if (ft_atoi(argv[1]) < 1 || ft_atoi(argv[2]) < 1
+		|| ft_atoi(argv[3]) < 1 || ft_atoi(argv[4]) < 1)
+		failure = 1;
+	if (argv[5] && ft_atoi(argv[5]) < 1)
+		failure = 1;
+	if (failure == 1)
+		exit_err(ERR_VALUES_TOO_LOW);
+}
+
 t_error	parsing(int argc, char **argv)
 {
 	int	i;
@@ -47,5 +63,6 @@ t_error	parsing(int argc, char **argv)
 			return (FAILURE);
 		i++;
 	}
+	check_values(argv);
 	return (SUCCESS);
 }

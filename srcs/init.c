@@ -3,46 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:55:23 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/09 17:42:35 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/09 22:42:45 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-static int	ft_isspace(int c)
-{
-	if ((c >= 9 && c <= 13) || c == ' ')
-		return (1);
-	return (0);
-}
-
-static int	ft_atoi(const char *nptr)
-{
-	int	i;
-	int	result;
-	int	sign;
-
-	i = 0;
-	result = 0;
-	sign = 1;
-	while (ft_isspace(nptr[i]) == 1)
-		i++;
-	if (nptr[i] == '-' || nptr[i] == '+')
-	{
-		if (nptr[i] == '-')
-			sign = -1;
-		i++;
-	}
-	while (nptr[i] && ft_isdigit(nptr[i]) == 1)
-	{
-		result = (result * 10) + (nptr[i] - '0');
-		i++;
-	}
-	return (result * sign);
-}
 
 static t_error	init_mutexes_data(t_data *data)
 {
@@ -119,6 +87,13 @@ t_error	init_all(t_data *data, t_philo *philo, char **argv, int argc)
 {
 	if (init_data(data, argv, argc) != SUCCESS)
 		return (ERR_MALLOC);
+	if (data->nb_philo == 1)
+	{
+		printf("0 :1 has taken a fork\n");
+		usleep(data->time_to_die * 1000);
+		printf("%lld :1 died\n", get_time() - data->start_time);
+		exit_err(ERR_DEATH);
+	}
 	if (init_mutexes_data(data) != SUCCESS)
 		return (ERR_MALLOC);
 	if (init_philo(philo, data) != SUCCESS)

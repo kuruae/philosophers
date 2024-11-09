@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:04:45 by enzo              #+#    #+#             */
-/*   Updated: 2024/11/09 17:34:32 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/09 22:06:27 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_error	sleeping(t_data *data, t_philo *philo)
 		return (ERR_DEATH);
 	time = get_time() - data->start_time;
 	printf("%ld :%d is sleeping\n", time, philo->id);
-	if (sleep_action(data->time_to_sleep, data, philo) != SUCCESS)
+	if (sleep_action(data->time_to_sleep, data, philo, SLEEP) != SUCCESS)
 		return (ERR_DEATH);
 	return (SUCCESS);
 }
@@ -73,8 +73,7 @@ t_error	eating(t_data *data, t_philo *philo)
 	printf("%ld :%d has taken a fork\n", time, philo->id);
 	printf("%ld :%d is eating\n", time, philo->id);
 	
-	usleep(data->time_to_eat * 1000);
-	
+	sleep_action(data->time_to_eat, data, philo, EAT);	
 	pthread_mutex_lock(&philo->meal_mutex);
 	if (philo->meal_remaining > 0)
 		philo->meal_remaining--;
@@ -85,7 +84,7 @@ t_error	eating(t_data *data, t_philo *philo)
 	return (SUCCESS);
 }
 
-t_error sleep_action(long long desired_time, t_data *data, t_philo *philo)
+t_error sleep_action(long long desired_time, t_data *data, t_philo *philo, t_action state)
 {
 	long long	time;
 
@@ -96,7 +95,7 @@ t_error sleep_action(long long desired_time, t_data *data, t_philo *philo)
 	{
 		usleep(50);
 		time = get_time() - data->start_time;
-		if (check_if_someone_died(data, philo, SLEEP) != SUCCESS)
+		if (state != EAT && check_if_someone_died(data, philo, state) != SUCCESS)
 			return (ERR_DEATH);
 	}
 	return (SUCCESS);

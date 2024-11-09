@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 20:40:10 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/07 19:26:14 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/09 22:36:30 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ typedef enum e_error
 	SUCCESS,
 	ERR_MALLOC,
 	ERR_DEATH,
+	ERR_VALUES_TOO_LOW,
+	ERR_TOO_MANY_PHILOS,
+	ERR_BAD_ARGUMENTS,
 	FAILURE
 }	t_error;
 

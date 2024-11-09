@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:35:09 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/09 17:43:37 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/09 22:53:49 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,18 @@ t_error		eating(t_data *data, t_philo *philo);
 t_error		sleeping(t_data *data, t_philo *philo);
 t_error		thinking(t_data *data, t_philo *philo);
 t_error		monitoring(t_data *data, t_philo *philo);
-t_error		sleep_action(long long desired_time, t_data *data, t_philo *philo);
+t_error		sleep_action(long long desired_time, t_data *data, t_philo *philo, t_action state);
 t_error 	check_if_someone_died(t_data *data, t_philo *philo, t_action state);
 t_error		destroy_mutexes(t_data *data, t_philo *philo);
 
 void		*routine(void *arg);
-void		exit_err(void);
+void		exit_err(t_error error);
 
 // UTILS
 
 long long	get_time(void);
 int			ft_isdigit(int c);
+int			ft_atoi(const char *nptr);
+int			ft_isspace(int c);
 
 #endif
