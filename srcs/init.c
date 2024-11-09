@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:55:23 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/09 14:32:06 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/09 17:42:35 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,9 @@ static t_error	init_mutexes_philo(t_philo *philo)
 	while (i < 200)
 	{
 		if (pthread_mutex_init(&philo[i].meal_mutex, NULL) != 0)
-			return (0);
+			return (ERR_MALLOC);
+		if (pthread_mutex_init(&philo[i].flag, NULL) != 0)
+			return (ERR_MALLOC);
 		i++;
 	}
 	return (SUCCESS);
@@ -87,8 +89,6 @@ static t_error	init_philo(t_philo *philo, t_data *data)
 	int	i;
 
 	i = 0;
-	// if (pthread_mutex_init(&data->log_mutex, NULL) != 0)
-	//     return (ERR_MALLOC);
 	while (i < data->nb_philo)
 	{
 		philo[i].id = i + 1;
@@ -98,12 +98,8 @@ static t_error	init_philo(t_philo *philo, t_data *data)
 		philo[i].last_eaten = 0;
 		philo[i].left_fork = &(data->forks[i]);
 		philo[i].right_fork = &(data->forks[(i + 1) % data->nb_philo]);
-		if (pthread_mutex_init(&philo[i].flag, NULL) != 0)
-			return (ERR_MALLOC);
 		i++;
 	}
-	if (pthread_mutex_init(&data->log_mutex, NULL) != 0)
-		return (ERR_MALLOC);
 	return (SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:35:09 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/09 14:47:14 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/09 17:43:37 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ t_error		sleeping(t_data *data, t_philo *philo);
 t_error		thinking(t_data *data, t_philo *philo);
 t_error		monitoring(t_data *data, t_philo *philo);
 t_error		sleep_action(long long desired_time, t_data *data, t_philo *philo);
+t_error 	check_if_someone_died(t_data *data, t_philo *philo, t_action state);
+t_error		destroy_mutexes(t_data *data, t_philo *philo);
 
 void		*routine(void *arg);
 void		exit_err(void);

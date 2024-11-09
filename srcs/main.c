@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:28:37 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/09 17:11:53 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/09 17:38:51 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_error	create_threads(t_data *data, t_philo *philo)
 			return (FAILURE);
 		i++;
 	}
+	destroy_mutexes(data, philo);
 	return (SUCCESS);
 }
 

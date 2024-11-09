@@ -6,13 +6,13 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:04:45 by enzo              #+#    #+#             */
-/*   Updated: 2024/11/09 16:58:04 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/09 17:34:32 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static t_error check_if_someone_died(t_data *data, t_philo *philo, t_action state)
+t_error check_if_someone_died(t_data *data, t_philo *philo, t_action state)
 {
 	pthread_mutex_lock(&philo->flag);
 	pthread_mutex_lock(&data->end_mutex);	
@@ -80,8 +80,8 @@ t_error	eating(t_data *data, t_philo *philo)
 		philo->meal_remaining--;
 	pthread_mutex_unlock(&philo->meal_mutex);
 
-	pthread_mutex_unlock(philo->left_fork);
 	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
 	return (SUCCESS);
 }
 
