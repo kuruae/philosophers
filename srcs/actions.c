@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:04:45 by enzo              #+#    #+#             */
-/*   Updated: 2024/11/09 22:06:27 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/10 00:18:27 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ t_error	eating(t_data *data, t_philo *philo)
 {
 	long	time;
 
-	if (check_if_someone_died(data, philo, EAT) != SUCCESS)
-		return (ERR_DEATH);
-
 	pthread_mutex_lock(philo->left_fork);
 	pthread_mutex_lock(philo->right_fork);
-	
+	if (check_if_someone_died(data, philo, EAT) != SUCCESS)
+	{
+		pthread_mutex_unlock(philo->left_fork);
+		pthread_mutex_unlock(philo->right_fork);	
+		return (ERR_DEATH);
+	}
 	time = get_time() - data->start_time;
 	
 	pthread_mutex_lock(&philo->meal_mutex);

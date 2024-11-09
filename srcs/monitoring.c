@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 16:55:16 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/09 22:09:24 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/09 23:14:20 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_error	monitoring(t_data *data, t_philo *philo)
 			pthread_mutex_unlock(&data->end_mutex);
 			return (SUCCESS);
 		}
+		usleep(100);
 	}
 	return (FAILURE);
 }
