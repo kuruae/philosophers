@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 16:55:16 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/07 19:26:30 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/09 14:46:31 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_error	monitoring(t_data *data, t_philo *philo)
 				// Lock to change state and print death message
 				pthread_mutex_lock(&philo[i].flag);
 				philo[i].state = DIED;
-				printf("%ld %d died\n", current_time, philo[i].id);
+				printf(COLOR_RED "%ld :%d died\n" COLOR_RESET, current_time, philo[i].id);
 				pthread_mutex_unlock(&philo[i].flag);
 
 				// Set program end flag to stop all philosophers

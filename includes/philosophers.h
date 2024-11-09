@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:35:09 by emagnani          #+#    #+#             */
-/*   Updated: 2024/10/31 17:56:05 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/09 14:47:14 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include "struct.h"
+
+# define COLOR_RESET "\x1b[0m"
+# define COLOR_RED "\x1b[31m"
+# define COLOR_GREEN "\x1b[32m"
 
 // STRUCTS AND ENUMS
 

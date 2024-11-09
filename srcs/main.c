@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:28:37 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/08 00:18:52 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/09 14:49:20 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ void	*routine(void *arg)
 	while (1)
 	{
 		pthread_mutex_lock(&philo->data->end_mutex);
+		pthread_mutex_lock(&philo->flag);
 		if (philo->data->should_end || philo->state == DIED)
 		{
 			pthread_mutex_unlock(&philo->data->end_mutex);
 			break;
 		}
+		pthread_mutex_unlock(&philo->flag);
 		pthread_mutex_unlock(&philo->data->end_mutex);
 
 		if (eating(philo->data, philo) != SUCCESS)
@@ -76,7 +78,7 @@ int	main(int argc, char **argv)
 	if (init_all(&data, data.philo, argv, argc) != SUCCESS)
 		exit_err();
 	create_threads(&data, data.philo);
-	printf("All philosophers are satisfied\n");
+	printf(COLOR_GREEN "All philosophers are satisfied\n" COLOR_RESET);
 	// free_data_exit(&data);
 	return (0);
 }

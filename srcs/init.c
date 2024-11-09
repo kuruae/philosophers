@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:55:23 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/07 23:52:53 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/09 14:32:06 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static t_error	init_philo(t_philo *philo, t_data *data)
 		philo[i].data = data;
 		philo[i].meal_remaining = data->maximum_meal;
 		philo[i].last_eaten = 0;
-philo[i].left_fork = &(data->forks[i]);
+		philo[i].left_fork = &(data->forks[i]);
 		philo[i].right_fork = &(data->forks[(i + 1) % data->nb_philo]);
 		if (pthread_mutex_init(&philo[i].flag, NULL) != 0)
 			return (ERR_MALLOC);
