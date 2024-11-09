@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:04:45 by enzo              #+#    #+#             */
-/*   Updated: 2024/11/09 16:28:29 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/09 16:58:04 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_error	eating(t_data *data, t_philo *philo)
 	pthread_mutex_lock(philo->right_fork);
 	
 	time = get_time() - data->start_time;
+	
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->last_eaten = get_time() - data->start_time;
 	pthread_mutex_unlock(&philo->meal_mutex);
@@ -71,7 +72,9 @@ t_error	eating(t_data *data, t_philo *philo)
 	printf("%ld :%d has taken a fork\n", time, philo->id);
 	printf("%ld :%d has taken a fork\n", time, philo->id);
 	printf("%ld :%d is eating\n", time, philo->id);
+	
 	usleep(data->time_to_eat * 1000);
+	
 	pthread_mutex_lock(&philo->meal_mutex);
 	if (philo->meal_remaining > 0)
 		philo->meal_remaining--;
