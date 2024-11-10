@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:04:45 by enzo              #+#    #+#             */
-/*   Updated: 2024/11/10 20:03:32 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/10 22:05:58 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,16 @@
 
 static t_error	thinking(t_data *data, t_philo *philo)
 {
-	long	time;
-
 	if (check_if_someone_died(data, philo, THINK) != SUCCESS)
 		return (ERR_DEATH);
-	time = get_time() - data->start_time;
 	safe_print(data, "is thinking", philo->id);
 	return (SUCCESS);
 }
 
 static t_error	sleeping(t_data *data, t_philo *philo)
 {
-	long			time;
-
 	if (check_if_someone_died(data, philo, SLEEP) != SUCCESS)
 		return (ERR_DEATH);
-	time = get_time() - data->start_time;
 	safe_print(data, "is sleeping", philo->id);
 	if (sleep_action(data->time_to_sleep, data, philo, SLEEP) != SUCCESS)
 		return (ERR_DEATH);
@@ -38,12 +32,12 @@ static t_error	sleeping(t_data *data, t_philo *philo)
 
 static t_error	eating(t_data *data, t_philo *philo)
 {
-	long			time;
 	pthread_mutex_t *first_fork;
 	pthread_mutex_t *second_fork;
 
-	if (philo->id == data->nb_philo)
+	if (philo->id % 2 == 0)
 	{
+		usleep(100);
 		first_fork = philo->right_fork;
 		second_fork = philo->left_fork;
 	}
@@ -60,7 +54,6 @@ static t_error	eating(t_data *data, t_philo *philo)
 		pthread_mutex_unlock(first_fork);
 		return (ERR_DEATH);
 	}
-	time = get_time() - data->start_time;
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->last_eaten = get_time() - data->start_time;
 	pthread_mutex_unlock(&philo->meal_mutex);
