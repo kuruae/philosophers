@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:35:09 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/10 19:35:02 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/11 00:25:09 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ void		safe_print(t_data *data, char *msg, int philo_id);
 int			ft_isdigit(int c);
 int			ft_atoi(const char *nptr);
 int			ft_isspace(int c);
+
+t_mutex		*ft_first_fork(t_philo *philo);
+t_mutex		*ft_second_fork(t_philo *philo);
+void		lock_forks(t_mutex *first_fork, t_mutex *second_fork);
+void		unlock_forks(t_mutex *first_fork, t_mutex *second_fork);
 
 // ERRORS
 

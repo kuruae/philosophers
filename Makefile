@@ -23,6 +23,7 @@ SRC_FILES = $(SRC_DIR)/main.c \
 			$(SRC_DIR)/init.c \
 			$(SRC_DIR)/philo_utils.c \
 			$(SRC_DIR)/str_utils.c \
+			$(SRC_DIR)/fork_utils.c \
 			$(SRC_DIR)/monitoring.c \
 			$(SRC_DIR)/actions.c \
 			$(SRC_DIR)/mutex.c \

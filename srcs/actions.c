@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:04:45 by enzo              #+#    #+#             */
-/*   Updated: 2024/11/10 22:05:58 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/11 00:20:15 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,12 @@ static t_error	sleeping(t_data *data, t_philo *philo)
 
 static t_error	eating(t_data *data, t_philo *philo)
 {
-	pthread_mutex_t *first_fork;
-	pthread_mutex_t *second_fork;
+	t_mutex	*first_fork;
+	t_mutex	*second_fork;
 
-	if (philo->id % 2 == 0)
-	{
-		usleep(100);
-		first_fork = philo->right_fork;
-		second_fork = philo->left_fork;
-	}
-	else
-	{
-		first_fork = philo->left_fork;
-		second_fork = philo->right_fork;
-	}
-	pthread_mutex_lock(first_fork);
-	pthread_mutex_lock(second_fork);
+	first_fork = ft_first_fork(philo);
+	second_fork = ft_second_fork(philo);
+	lock_forks(first_fork, second_fork);
 	if (check_if_someone_died(data, philo, EAT) != SUCCESS)
 	{
 		pthread_mutex_unlock(second_fork);
@@ -65,8 +55,7 @@ static t_error	eating(t_data *data, t_philo *philo)
 	if (philo->meal_remaining > 0)
 		philo->meal_remaining--;
 	pthread_mutex_unlock(&philo->meal_mutex);
-	pthread_mutex_unlock(second_fork);
-	pthread_mutex_unlock(first_fork);
+	unlock_forks(first_fork, second_fork);
 	return (SUCCESS);
 }
 
