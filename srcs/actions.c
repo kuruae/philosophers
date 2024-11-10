@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:04:45 by enzo              #+#    #+#             */
-/*   Updated: 2024/11/10 19:21:42 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/10 19:36:42 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_error	thinking(t_data *data, t_philo *philo)
 	if (check_if_someone_died(data, philo, THINK) != SUCCESS)
 		return (ERR_DEATH);
 	time = get_time() - data->start_time;
-	printf("%ld :%d is thinking\n", time, philo->id);
+	safe_print(data, "is thinking", philo->id);
 	return (SUCCESS);
 }
 
@@ -30,7 +30,7 @@ static t_error	sleeping(t_data *data, t_philo *philo)
 	if (check_if_someone_died(data, philo, SLEEP) != SUCCESS)
 		return (ERR_DEATH);
 	time = get_time() - data->start_time;
-	printf("%ld :%d is sleeping\n", time, philo->id);
+	safe_print(data, "is sleeping", philo->id);
 	if (sleep_action(data->time_to_sleep, data, philo, SLEEP) != SUCCESS)
 		return (ERR_DEATH);
 	return (SUCCESS);
@@ -67,9 +67,12 @@ static t_error	eating(t_data *data, t_philo *philo)
     pthread_mutex_lock(&philo->meal_mutex);
     philo->last_eaten = get_time() - data->start_time;
     pthread_mutex_unlock(&philo->meal_mutex);
-    printf("%ld :%d has taken a fork\n", time, philo->id);
-    printf("%ld :%d has taken a fork\n", time, philo->id);
-    printf("%ld :%d is eating\n", time, philo->id);
+	safe_print(data, "has taken a fork", philo->id);
+	safe_print(data, "has taken a fork", philo->id);
+	safe_print(data, "is eating", philo->id);
+    // printf("%ld :%d has taken a fork\n", time, philo->id);
+    // printf("%ld :%d has taken a fork\n", time, philo->id);
+    // printf("%ld :%d is eating\n", time, philo->id);
     sleep_action(data->time_to_eat, data, philo, EAT);
     pthread_mutex_lock(&philo->meal_mutex);
     if (philo->meal_remaining > 0)
