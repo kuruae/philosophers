@@ -6,51 +6,11 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:55:23 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/09 22:42:45 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/10 01:18:07 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-static t_error	init_mutexes_data(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	// Initialize each fork's mutex
-	while (i < data->nb_philo)
-	{
-		if (pthread_mutex_init(&(data->forks[i]), NULL) != 0)
-			return (0);
-		i++;
-	}
-	i = 0;
-	// Initialize the log mutex
-	if (pthread_mutex_init(&data->log_mutex, NULL) != 0)
-		return (ERR_MALLOC);
-
-	// Initialize the end mutex
-	if (pthread_mutex_init(&data->end_mutex, NULL) != 0)
-		return (ERR_MALLOC);
-
-	return (SUCCESS);
-}
-
-static t_error	init_mutexes_philo(t_philo *philo)
-{
-	int	i;
-
-	i = 0;
-	while (i < 200)
-	{
-		if (pthread_mutex_init(&philo[i].meal_mutex, NULL) != 0)
-			return (ERR_MALLOC);
-		if (pthread_mutex_init(&philo[i].flag, NULL) != 0)
-			return (ERR_MALLOC);
-		i++;
-	}
-	return (SUCCESS);
-}
 
 static t_error	init_philo(t_philo *philo, t_data *data)
 {

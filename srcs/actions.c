@@ -6,31 +6,44 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 23:04:45 by enzo              #+#    #+#             */
-/*   Updated: 2024/11/10 00:18:27 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/10 01:30:26 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_error check_if_someone_died(t_data *data, t_philo *philo, t_action state)
+void	*routine(void *arg)
 {
-	pthread_mutex_lock(&philo->flag);
-	pthread_mutex_lock(&data->end_mutex);	
-	if (philo->state == DIED || data->should_end == 1)
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	if (philo->id % 2 == 0)
+		usleep(1000);
+	while (1)
 	{
-		pthread_mutex_unlock(&data->end_mutex);
+		pthread_mutex_lock(&philo->data->end_mutex);
+		pthread_mutex_lock(&philo->flag);
+		if (philo->data->should_end || philo->state == DIED)
+		{
+			pthread_mutex_unlock(&philo->data->end_mutex);
+			break ;
+		}
 		pthread_mutex_unlock(&philo->flag);
-		return (ERR_DEATH);
+		pthread_mutex_unlock(&philo->data->end_mutex);
+
+		if (eating(philo->data, philo) != SUCCESS)
+			break ;
+		if (sleeping(philo->data, philo) != SUCCESS)
+			break ;
+		if (thinking(philo->data, philo) != SUCCESS)
+			break ;
 	}
-	philo->state = state;
-	pthread_mutex_unlock(&data->end_mutex);
-	pthread_mutex_unlock(&philo->flag);
-	return (SUCCESS);
+	return (NULL);
 }
 
 t_error	thinking(t_data *data, t_philo *philo)
 {
-	long			time;
+	long	time;
 
 	if (check_if_someone_died(data, philo, THINK) != SUCCESS)
 		return (ERR_DEATH);
@@ -52,7 +65,6 @@ t_error	sleeping(t_data *data, t_philo *philo)
 	return (SUCCESS);
 }
 
-
 t_error	eating(t_data *data, t_philo *philo)
 {
 	long	time;
@@ -66,39 +78,19 @@ t_error	eating(t_data *data, t_philo *philo)
 		return (ERR_DEATH);
 	}
 	time = get_time() - data->start_time;
-	
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->last_eaten = get_time() - data->start_time;
 	pthread_mutex_unlock(&philo->meal_mutex);
-	
 	printf("%ld :%d has taken a fork\n", time, philo->id);
 	printf("%ld :%d has taken a fork\n", time, philo->id);
 	printf("%ld :%d is eating\n", time, philo->id);
-	
 	sleep_action(data->time_to_eat, data, philo, EAT);	
 	pthread_mutex_lock(&philo->meal_mutex);
 	if (philo->meal_remaining > 0)
 		philo->meal_remaining--;
 	pthread_mutex_unlock(&philo->meal_mutex);
-
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
 	return (SUCCESS);
 }
 
-t_error sleep_action(long long desired_time, t_data *data, t_philo *philo, t_action state)
-{
-	long long	time;
-
-	time = get_time() - data->start_time;
-	desired_time += time;
-
-	while (time < desired_time)
-	{
-		usleep(50);
-		time = get_time() - data->start_time;
-		if (state != EAT && check_if_someone_died(data, philo, state) != SUCCESS)
-			return (ERR_DEATH);
-	}
-	return (SUCCESS);
-}

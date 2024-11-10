@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:35:09 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/09 22:53:49 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/10 01:27:52 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include "struct.h"
+
+// COLORS
 
 # define COLOR_RESET "\x1b[0m"
 # define COLOR_RED "\x1b[31m"
@@ -41,20 +43,28 @@ typedef struct s_philo	t_philo;
 t_error		parsing(int agrc, char **argv);
 t_error		init_all(t_data *data, t_philo *philo, char **argv, int argc);
 t_error		create_threads(t_data *data, t_philo *philo);
+t_error		monitoring(t_data *data, t_philo *philo);
+t_error		check_if_someone_died(t_data *data, t_philo *philo, t_action state);
+t_error		sleep_action(long long desired_time, t_data *data, t_philo *philo,
+				t_action state);
+void		*routine(void *arg);
+
+// ACTIONS
+
 t_error		eating(t_data *data, t_philo *philo);
 t_error		sleeping(t_data *data, t_philo *philo);
 t_error		thinking(t_data *data, t_philo *philo);
-t_error		monitoring(t_data *data, t_philo *philo);
-t_error		sleep_action(long long desired_time, t_data *data, t_philo *philo, t_action state);
-t_error 	check_if_someone_died(t_data *data, t_philo *philo, t_action state);
-t_error		destroy_mutexes(t_data *data, t_philo *philo);
 
-void		*routine(void *arg);
-void		exit_err(t_error error);
+// MUTEXES
+
+t_error		init_mutexes_data(t_data *data);
+t_error		init_mutexes_philo(t_philo *philo);
+t_error		destroy_mutexes(t_data *data, t_philo *philo);
 
 // UTILS
 
 long long	get_time(void);
+void		exit_err(t_error error);
 int			ft_isdigit(int c);
 int			ft_atoi(const char *nptr);
 int			ft_isspace(int c);
