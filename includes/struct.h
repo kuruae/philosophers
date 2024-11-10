@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 20:40:10 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/09 22:36:30 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/10 18:13:24 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef pthread_mutex_t	t_mutex;
 
 typedef enum e_action
 {
+	DEFAULT,
 	FORK,
 	EAT,
 	SLEEP,

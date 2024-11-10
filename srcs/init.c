@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:55:23 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/10 04:22:40 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/10 18:15:06 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_error	init_philo(t_philo *philo, t_data *data)
 		philo[i].data = data;
 		philo[i].meal_remaining = data->maximum_meal;
 		philo[i].last_eaten = 0;
+		philo[i].state = DEFAULT;
 		philo[i].left_fork = &(data->forks[i]);
 		philo[i].right_fork = &(data->forks[(i + 1) % data->nb_philo]);
 		i++;
@@ -38,6 +39,7 @@ static t_error	init_data(t_data *data, char **argv, int argc)
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
 	data->start_time = get_time();
+	data->should_end = 0;
 	if (argc == 6)
 		data->maximum_meal = ft_atoi(argv[5]);
 	return (SUCCESS);

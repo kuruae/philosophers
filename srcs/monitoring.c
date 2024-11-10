@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 16:55:16 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/10 01:45:39 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/10 18:56:46 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ t_error	monitoring(t_data *data, t_philo *philo)
 			if ((current_time - philo[i].last_eaten) > data->time_to_die)
 			{
 				pthread_mutex_lock(&philo[i].flag);
+				pthread_mutex_lock(&data->end_mutex);
 				philo[i].state = DIED;
 				printf(COLOR_RED "%ld :%d died\n" COLOR_RESET, current_time, philo[i].id);
-				pthread_mutex_unlock(&philo[i].flag);
-
-				pthread_mutex_lock(&data->end_mutex);
 				data->should_end = 1;
 				pthread_mutex_unlock(&data->end_mutex);
+				pthread_mutex_unlock(&philo[i].flag);
 				
 				pthread_mutex_unlock(&philo[i].meal_mutex);
 				return (ERR_DEATH);
