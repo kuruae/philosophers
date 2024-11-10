@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 17:55:23 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/10 01:18:07 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/10 04:22:40 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,28 @@ t_error	init_all(t_data *data, t_philo *philo, char **argv, int argc)
 		return (ERR_MALLOC);
 	if (init_mutexes_philo(philo) != SUCCESS)
 		return (ERR_MALLOC);
+	return (SUCCESS);
+}
+
+t_error	create_threads(t_data *data, t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i != data->nb_philo)
+	{
+		if (pthread_create(&philo[i].thread_id, NULL, routine, &philo[i]) != 0)
+			return (FAILURE);
+		i++;
+	}
+	monitoring(data, philo);
+	i = 0;
+	while (i < data->nb_philo)
+	{
+		if (pthread_join(philo[i].thread_id, NULL) != 0)
+			return (FAILURE);
+		i++;
+	}
+	destroy_mutexes(data, philo);
 	return (SUCCESS);
 }
