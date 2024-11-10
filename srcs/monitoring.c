@@ -6,7 +6,7 @@
 /*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 16:55:16 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/10 18:56:46 by emagnani         ###   ########.fr       */
+/*   Updated: 2024/11/10 20:03:06 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_error	monitoring(t_data *data, t_philo *philo)
 				data->should_end = 1;
 				pthread_mutex_unlock(&data->end_mutex);
 				pthread_mutex_unlock(&philo[i].flag);
-				
 				pthread_mutex_unlock(&philo[i].meal_mutex);
 				return (ERR_DEATH);
 			}
