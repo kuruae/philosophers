@@ -1,7 +1,7 @@
 ######### COLORS ########
-GREEN = \x1B[32m
-RED = \x1B[31m
-RESET = \x1B[0m
+GREEN := $(shell printf "\033[32m")
+RED := $(shell printf "\033[31m")
+RESET := $(shell printf "\033[0m")
 
 ######### FLAGS ########
 CC = clang
@@ -39,9 +39,9 @@ NAME_ASAN = asan_philo
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	@echo -e "$(GREEN)Compiling $(NAME)...$(RESET)"
+	@printf "$(GREEN)Compiling $(NAME)...$(RESET)\n"
 	@$(CC) $(CFLAGS) -o $@ $^
-	@echo -e "$(GREEN)✓ $(NAME) successfully compiled!$(RESET)"
+	@printf "$(GREEN)✓ $(NAME) successfully compiled!$(RESET)\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
@@ -51,10 +51,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 asan: $(NAME_ASAN)
 
 $(NAME_ASAN): $(OBJ_FILES_ASAN)
-	@echo -e "$(GREEN)Compiling $(NAME) with AddressSanitizer...$(RESET)"
+	@printf "$(GREEN)Compiling $(NAME) with AddressSanitizer...$(RESET)\n"
 	@$(CC) $(CFLAGS) $(SANITIZE_FLAGS) -o $@ $^
-	@echo -e "$(GREEN)✓ $(NAME) with ASAN successfully compiled!$(RESET)"
-	@echo -e "$(GREEN)→ Run with: ASAN_OPTIONS=abort_on_error=1:halt_on_error=1 ./$(NAME_ASAN)$(RESET)"
+	@printf "$(GREEN)✓ $(NAME) with ASAN successfully compiled!$(RESET)\n"
+	@printf "$(GREEN)→ Run with: ASAN_OPTIONS=abort_on_error=1:halt_on_error=1 ./$(NAME_ASAN)$(RESET)"
 
 $(OBJ_DIR)/asan/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
@@ -62,14 +62,14 @@ $(OBJ_DIR)/asan/%.o: $(SRC_DIR)/%.c
 	@printf "$(GREEN)█$(RESET)"
 
 clean:
-	@echo -e "$(RED)Cleaning object files...$(RESET)"
+	@printf "$(RED)Cleaning object files...$(RESET)\n"
 	@rm -rf $(OBJ_DIR)
-	@echo -e "$(RED)✓ Object files cleaned!$(RESET)"
+	@printf "$(RED)✓ Object files cleaned!$(RESET)\n"
 
 fclean: clean
-	@echo -e "$(RED)Removing executable...$(RESET)"
+	@printf "$(RED)Removing executable...$(RESET)\n"
 	@rm -f $(NAME) $(NAME_ASAN)
-	@echo -e "$(RED)✓ Executable removed!$(RESET)"
+	@printf "$(RED)✓ Executable removed!$(RESET)\n"
 
 re: fclean all
 
