@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:26:37 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/11 00:25:44 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/12 14:35:39 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,26 @@ int	ft_atoi(const char *nptr)
 	return (result * sign);
 }
 
-void	safe_print(t_data *data, char *msg, int philo_id)
+t_error	safe_print(t_data *data, char *msg, t_philo *philo, t_action state)
 {
 	pthread_mutex_lock(&data->log_mutex);
-	printf("%lld :%d %s\n", get_time() - data->start_time, philo_id, msg);
+	if (check_if_someone_died(data, philo, state) != SUCCESS)
+	{
+		pthread_mutex_unlock(&data->log_mutex);
+		return (ERR_DEATH);
+	}
+	printf("%lld :%d %s\n", get_time() - data->start_time, philo->id, msg);
 	pthread_mutex_unlock(&data->log_mutex);
+	return (SUCCESS);
+}
+
+t_error	print_eating(t_data *data, t_philo *philo)
+{
+	if (safe_print(data, "has taken a fork", philo, EAT) != SUCCESS)
+		return (ERR_DEATH);
+	if (safe_print(data, "has taken a fork", philo, EAT) != SUCCESS)
+		return (ERR_DEATH);
+	if (safe_print(data, "is eating", philo, EAT) != SUCCESS)
+		return (ERR_DEATH);
+	return (SUCCESS);
 }

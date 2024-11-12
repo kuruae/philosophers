@@ -3,21 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 16:55:16 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/11 00:26:25 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/12 14:35:33 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static void	safe_print_monitor(t_data *data, char *msg, int philo_id)
+{
+	printf("%lld :%d %s\n", get_time() - data->start_time, philo_id, msg);
+}
 
 static t_error	philo_dies(t_data *data, t_philo *philo, int i)
 {
 	pthread_mutex_lock(&philo[i].flag);
 	pthread_mutex_lock(&data->end_mutex);
 	philo[i].state = DIED;
-	safe_print(data, COLOR_RED "died", philo[i].id);
+	safe_print_monitor(data, COLOR_RED "died", philo[i].id);
 	data->should_end = 1;
 	pthread_mutex_unlock(&data->end_mutex);
 	pthread_mutex_unlock(&philo[i].flag);

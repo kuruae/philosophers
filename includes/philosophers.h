@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: emagnani <emagnani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:35:09 by emagnani          #+#    #+#             */
-/*   Updated: 2024/11/11 00:25:09 by enzo             ###   ########.fr       */
+/*   Updated: 2024/11/12 14:13:29 by emagnani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ t_error		destroy_mutexes(t_data *data, t_philo *philo);
 // UTILS
 
 long long	get_time(void);
-void		safe_print(t_data *data, char *msg, int philo_id);
+t_error		safe_print(t_data *data, char *msg, t_philo *philo, t_action state);
+t_error		print_eating(t_data *data, t_philo *philo);
 int			ft_isdigit(int c);
 int			ft_atoi(const char *nptr);
 int			ft_isspace(int c);
